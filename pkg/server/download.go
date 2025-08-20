@@ -31,5 +31,8 @@ func (s *Server) download(ctx *gin.Context) {
 
 	log.Infof("generate presigned url: %v", request)
 
-	ctx.Redirect(http.StatusMovedPermanently, request)
+	ctx.Header("Cache-Control", "no-cache, no-store, must-revalidate")
+	ctx.Header("Pragma", "no-cache")
+	ctx.Header("Expires", "0")
+	ctx.Redirect(http.StatusTemporaryRedirect, request)
 }
